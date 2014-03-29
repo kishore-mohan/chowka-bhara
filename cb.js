@@ -112,7 +112,7 @@ function create_players(num) {
 //hard coding all the values
 	var player_1 = new Player();
 	player_1.id = 1;
-	player_1.startBox = 13;
+	player_1.startBox = 31;
 	player_1.path = [31, 21, 11, 12, 13, 14, 15, 25, 35, 45, 55, 54, 53, 52, 51, 41, 42, 43, 44, 34, 24, 23, 22, 32, 33];
 	players[0] = player_1;
 
@@ -539,6 +539,21 @@ var box_width = 70;
 var r;
 var kharab_player_id = [4, 1, 3, 2];
 var kharab = 0;
+var colors = ["#0D24AE","#00FFFF","#00FF00","#FFFF00"]
+
+function autoPawnMove(pawn_id) {
+    var current_player = getPlayerId(pawn_id);
+    this_pawn = getPawnById(pawn_id);
+  if (values.length > 0 && current_player == (now.turn + 1)) {
+    var move_to = players[current_player-1].path.findIndex(this_pawn.currentBox) + values[0];
+    var to_indx = players[current_player-1].path[move_to];
+    var to_box = getBoxDim(to_indx);
+    var att = this_pawn.fig.type == "rect" ?
+      {x: to_box.x, y: to_box.y} :
+      {cx: to_box.x + (this_pawn.inc_id%10)*25 , cy: to_box.y + (this_pawn.inc_id%10)*25};
+    this_pawn.fig.attr(att);
+  }
+}
 
 function loadCB() {
 	r = Raphael("holder", 500, 500);	
@@ -570,7 +585,8 @@ function loadCB() {
 		},
 		up = function () {
 				this.animate({"fill-opacity": 1}, 500);
-				from_id = getBoxId(this.ox, this.oy);
+                autoPawnMove(this.id);
+                from_id = getBoxId(this.ox, this.oy);
 				to_id = getBoxId(this.attrs.cx , this.attrs.cy);
 				this_pawn = getPawnById(this.id);
 				if(from_id == to_id) {
@@ -643,7 +659,8 @@ function loadCB() {
 					}else if(free_hit ==1){
 						var myDice = document.getElementById('role_dice');
 						var myScore = document.getElementById('score');
-						myScore.innerHTML = "Please Roll"; 
+						myScore.innerHTML = "Please Roll";
+                      $("#role_dice").css("display", "block");
 						myDice.disabled = "";
 						updateDiceStackUI();
 					}else {	
@@ -718,29 +735,29 @@ function loadCB() {
 
 				// create pawns legend
 				if(legend_index == 0) {
-					r.circle(left_width + 50, 263, legend_radius).attr("fill", color);	
+					r.circle(left_width + 50, 263, legend_radius).attr("fill", colors[0]);
 					l_text_l = r.text(left_width + 25, 295, "")
           	.attr({"fill": "#000", "font-size": legend_font, "font-family": "Arial"});				
 				}
 				if(legend_index == 1){
-					r.circle(left_width + 255, 50, legend_radius).attr("fill", color);
+					r.circle(left_width + 255, 50, legend_radius).attr("fill", colors[1]);
 					l_text_t = r.text(left_width + 298, 50, "")
           	.attr({"fill": "#000", "font-size": legend_font, "font-family": "Arial"});
 				}
 				if(legend_index == 2){
-					r.circle(left_width + 255, 470, legend_radius).attr("fill", color);	
+					r.circle(left_width + 255, 470, legend_radius).attr("fill", colors[2]);
 					l_text_b = r.text(left_width + 298, 470, "")
           	.attr({"fill": "#000", "font-size": legend_font, "font-family": "Arial"});				
 				} 
 				if(legend_index == 3){
-					r.circle(left_width + 475, 263, legend_radius).attr("fill", color);
+					r.circle(left_width + 475, 263, legend_radius).attr("fill", colors[3]);
 					l_text_r = r.text(left_width + 480, 295, "")
           	.attr({"fill": "#000", "font-size": legend_font, "font-family": "Arial"});
 				}
 				legend_index += 1;
 			}
 			count = count + 1;
-			pawns[i].fig.attr({fill: color, stroke: color, "fill-opacity": 2, "stroke-width": 2, cursor: "move"});
+			pawns[i].fig.attr({fill: colors[Math.floor(i/4)], stroke: color, "fill-opacity": 2, "stroke-width": 2, cursor: "move"});
 			pawns[i].fig.drag(move, dragger, up);
 	}
 	create_players(4);
@@ -756,7 +773,7 @@ function getuuid() {
 	setTimeout(function() {
 		uuid = now.uuid;
 		now.distributeGamePlay("Thanks for your patience... " + now.name +
-			" is ready, Moderator starts first");
+			" is ready, Moderator starts first</br></br>");
 		setTimeout(function() {
 			now.addPlayer(uuid);
 			set_legends();
@@ -820,17 +837,19 @@ function play_game(){
 	myScore.innerHTML = "Dice rolling ...";
 	var myDice = document.getElementById('role_dice');
 	myDice.disabled = "true";
+    $("#role_dice").css("display", "none");
 	var myDiceStack = document.getElementById('dice_stack');
 	setTimeout(function() {
 			free_hit = 0;
 			var server_val = now.vali;
 			values.push(server_val);
-		        myScore.innerHTML = "You rolled " + server_val;
+		        myScore.innerHTML = "You rolled " + server_val + "</br>Now move coins";
 			if(server_val == 4 || server_val == 8) {
 				free_hit = 1;
 			}
 
 			if(free_hit == 1) {
+              $("#role_dice").css("display", "block");
 				myDice.disabled = "";
 				now.distributeGamePlay(this.now.name + " gets a free hit - rolled " + server_val);
 			}

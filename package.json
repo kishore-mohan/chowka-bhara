@@ -1,0 +1,21 @@
+{
+  "name": "role_baby_role",
+  "version": "0.0.0",
+  "description": "A nodejs implementation of the Classical game of Roll Baby Roll with :",
+  "main": "main.js",
+  "dependencies": {
+    "now": "^0.8.1",
+    "emoticons": "~0.1.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://mansoorelahi@bitbucket.org/kishore-mohan/role_baby_role.git"
+  },
+  "author": "mansoor",
+  "license": "ISC"
+}

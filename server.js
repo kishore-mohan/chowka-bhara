@@ -1,6 +1,6 @@
 var http = require("http");
 var url = require("url");
-var port = 8081;
+var port = process.env.PORT || 5000;
 
 function start(route, handle) {
   function onRequest(request, response) {

@@ -1,3 +1,18 @@
+Installation:-
+
+Install node and npm latest version
+
+Inside the application folder run,
+
+sudo npm install now
+
+Start the application with
+
+nodejs main.js
+
+server started with 5000 port, can check with
+localhost:5000
+
 A nodejs implementation of the Classical game of Chowka bhara with :
 
 A. Attacking rules

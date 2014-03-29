@@ -1,85 +1,85 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Chowka Bhara</title>
-		<link type="text/css" rel="stylesheet" href="main.css" media="screen">
-		<script type="text/javascript" src="jquery.min.js"></script>
-		<script src="nowjs/now.js"></script> 
-		<script src="jquery_popup.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript">
-			$(document).ready(function(){
-				now.ready(function(){
-					setServerRoomFromList(now.serverRoomsList);
-				});
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Chowka Bhara - ಚೌಕಬಾರ</title>
+    <link type="text/css" rel="stylesheet" href="main.css" media="screen">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script src="nowjs/now.js"></script>
+    <script src="jquery_popup.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            now.ready(function(){
+                setServerRoomFromList(now.serverRoomsList);
+            });
 
-				// populate the game room list
-				function setServerRoomFromList(roomList){
-			    $('#server-room').empty();
-			    $.each(roomList, function(key, value){
-			    	now.groupCount(key, function(count){
-				    	now.getRoomStatus(key, function(is_locked){
-				    		var html_stuff = "<span>";
-						    if(is_locked){
-						    	html_stuff += "<a onclick='return false;' class='room_box' href='/game?room=" + key + "'>" + value;
-						    	html_stuff += "<br/>" + count + " in play";
-						    	html_stuff += "<br/>Locked";
-						    }else{
-						    	html_stuff += "<a class='room_box' href='/game?room=" + key + "'>" + value;
-						    	html_stuff += "<br/>" + count + " in play";
-						    	html_stuff += "<br/>Open";
-						    }
-						    html_stuff += "</a></span><p class='box_spacer'/>";
-						    if(value)
-						    	$('#server-room').append(html_stuff);
-				    	});
-				    });
-					});
-				}		
+            // populate the game room list
+            function setServerRoomFromList(roomList){
+                $('#server-room').empty();
+                $.each(roomList, function(key, value){
+                    now.groupCount(key, function(count){
+                        now.getRoomStatus(key, function(is_locked){
+                            var html_stuff = "<span>";
+                            if(is_locked){
+                                html_stuff += "<a onclick='return false;' class='room_box' href='/game?room=" + key + "'>" + value;
+                                html_stuff += "<br/>" + count + " in play";
+                                html_stuff += "<br/>Locked";
+                            }else{
+                                html_stuff += "<a class='room_box' href='/game?room=" + key + "'>" + value;
+                                html_stuff += "<br/>" + count + " in play";
+                                html_stuff += "<br/>Open";
+                            }
+                            html_stuff += "</a></span><p class='box_spacer'/>";
+                            if(value)
+                                $('#server-room').append(html_stuff);
+                        });
+                    });
+                });
+            }
 
-				$("#help_div").live('click', function(){
-					$.get('README', function(data) {
-	        	$("#contactArea").html($(data));
-	        	loadPopup();
-						centerPopup();
-	      	});
-				});
+            $("#help_div").live('click', function(){
+                $.get('README', function(data) {
+                    $("#contactArea").html($(data));
+                    loadPopup();
+                    centerPopup();
+                });
+            });
 
-				$("#help_close_link").live('click', function(){
-					disablePopup();
-				});			
-			});
+            $("#help_close_link").live('click', function(){
+                disablePopup();
+            });
+        });
 
-		</script>
-	</head>
-	<body>
-		<div id="popupContact">		
-			<div id="contactArea">
-				<center><b>Loading Please wait ...</b></center> 
-			</div>
-		</div>
-		<div id="backgroundPopup"></div>
-		
-		<div class="landing_page">
-			<center>
-				Chowka Bhara (ಚೌಕಬಾರ) - A Classical Indian Multiplayer Board Game
-				<p class="features">
-					Multi player game - play upto 4 players<br/>
-					Multi Game rooms support<br/>
-					Chat while u play<br/>
-					Classical game play<br/>
-				</p>
-				<a id="help_div" class='help_link' href="#">How do I play ... ?</a>
-				<hr/>
-				Start Playing Now ...
-			</center>
-			<p>
-				<span class="box"></span>
-				<span id="server-room" class="server_room">
+    </script>
+</head>
+<body>
+<div id="popupContact">
+    <div id="contactArea">
+        <center><b>Loading Please wait ...</b></center>
+    </div>
+</div>
+<div id="backgroundPopup"></div>
+
+<div class="landing_page">
+    <center>
+        <h3 style="font-family: chalkduster">Chowka Bhara - A Classical Indian Multiplayer Board Game</h3>
+        <p class="features" style="font-family: chalkduster">
+            Multi player game - play upto 4 players<br/>
+            Multi Game rooms support<br/>
+            Chat while u play<br/>
+            Classical game play<br/>
+        </p>
+        <a id="help_div" class='help_link' href="#" style="font-weight: bold">How do I play ... ?</a>
+        <hr/>
+        <p style="font-family: chalkduster">Start Playing Now ...</p>
+    </center>
+    <p>
+        <span class="box"></span>
+				<span style="padding-left: 220px" id="server-room" class="server_room">
 					<span>Connecting ... Please Wait</span>
 				</span>
-				<span class="box"></span>
-			</p>
-		</div>
-	</body>
+        <span class="box"></span>
+    </p>
+</div>
+</body>
 </html>

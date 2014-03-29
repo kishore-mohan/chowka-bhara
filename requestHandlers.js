@@ -17,6 +17,25 @@ function loading_image(response) {
 	});
 }
 
+function load_image(response) {
+    console.log("cb_server:" + new Date() + ":Request handler 'loading_image' was called.");
+    fs.readFile('emoticons.png', function(err, data){
+        response.writeHead(200, {'Content-Type':'image/gif'});
+        response.write(data);
+        response.end();
+    });
+}
+
+function close_image(response) {
+    console.log("cb_server:" + new Date() + ":Request handler 'loading_image' was called.");
+    fs.readFile('close_btn.png', function(err, data){
+        response.writeHead(200, {'Content-Type':'image/gif'});
+        response.write(data);
+        response.end();
+    });
+}
+
+
 function README(response) {
   console.log("cb_server:" + new Date() + ":Request handler 'README' was called.");
 	fs.readFile('readme.html', function(err, data){
@@ -33,6 +52,16 @@ function css(response) {
 		response.write(data);
 		response.end();
 	});
+}
+
+
+function emoticss(response) {
+    console.log("cb_server:" + new Date() + ":Request handler 'emoticon css' was called.");
+    fs.readFile('emoticons.css', function(err, data){
+        response.writeHead(200, {'Content-Type':'text/css'});
+        response.write(data);
+        response.end();
+    });
 }
 
 function index(response) {
@@ -60,6 +89,15 @@ function cbjs(response) {
 		response.write(data);
 		response.end();
 	});
+}
+
+function emoticons(response) {
+    console.log("cb_server:" + new Date() + ":Request handler 'emoticons' was called.");
+    fs.readFile('emoticons.js', function(err, data){
+        response.writeHead(200, {'Content-Type':'text/javascript'});
+        response.write(data);
+        response.end();
+    });
 }
 
 function raphaeljs(response) {
@@ -103,9 +141,13 @@ exports.jqueryurljs = jqueryurljs;
 exports.jqueryminjs = jqueryminjs;
 exports.jquerypopupjs = jquerypopupjs;
 exports.cbjs = cbjs;
+exports.emoticons = emoticons;
 exports.favicon = favicon;
 exports.css = css;
+exports.emoticss = emoticss;
 exports.index = index;
 exports.game = game;
 exports.README = README;
 exports.loading_image = loading_image;
+exports.load_image = load_image;
+exports.close_image =close_image;
